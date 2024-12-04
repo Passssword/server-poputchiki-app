@@ -15,10 +15,18 @@ app.get('/', function (req, res) {
     return res.json(dataAccessLayer_js_1.locations);
 });
 app.get('/adverts', function (req, res) {
-    res.send('Hello, TypeScript with Express!');
+    databaseController_js_1.baseController.GetAdverts()
+        .then(function (data) {
+        console.log("Request POST --->");
+        console.log(data);
+        res.status(200);
+        return res.json(data);
+    })
+        .catch(function (err) { return console.log(err); });
 });
 app.post('/adverts', function (req, res) {
     // const reqBody = JSON.parse(req.body)
+    console.log("Request POST --->");
     console.log(req.body);
     databaseController_js_1.baseController.create(req.body, function (error) {
         if (error) {

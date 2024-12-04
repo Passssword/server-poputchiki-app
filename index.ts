@@ -16,8 +16,10 @@ app.get('/', (req: object, res: object) => {
     return res.json( locations )
 });
 app.get('/adverts', (req: object, res: object) => {
-    baseController.GetLocations()
+    baseController.GetAdverts()
         .then( data => {
+            console.log("Request POST --->")
+            console.log(data)
             res.status(200)
             return res.json( data )
         })
