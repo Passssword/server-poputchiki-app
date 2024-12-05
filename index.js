@@ -3,22 +3,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var cors = require("cors");
 var bodyParser = require("body-parser");
-var dataAccessLayer_js_1 = require("./source/dataAccessLayer.js");
+var path = require("path");
 var databaseController_js_1 = require("./source/databaseController.js");
 var app = express();
 var port = 34587;
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static('client'));
 app.get('/', function (req, res) {
-    // const locations = getLocations('./source/locations.json');
-    // const locationsJson = JSON.parse(locations)
-    return res.json(dataAccessLayer_js_1.locations);
+    return (res.type('.html'));
+    res.sendFile(path.resolve(__dirname, 'client/index.html'));
 });
+;
+app.get('/docx', function (req, res) {
+    return (res.type('.html'));
+    res.sendFile(path.resolve(__dirname, 'client/docx.html'));
+});
+;
 app.get('/adverts', function (req, res) {
     databaseController_js_1.baseController.GetAdverts()
         .then(function (data) {
-        console.log("Request POST --->");
-        console.log(data);
         res.status(200);
         return res.json(data);
     })

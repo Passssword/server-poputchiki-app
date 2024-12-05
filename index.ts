@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
+import * as path from 'path'
 import { locations } from './source/dataAccessLayer.js'
 import { baseController } from './source/databaseController.js'
 
@@ -9,17 +10,23 @@ const port = 34587;
 
 app.use( bodyParser.json() )
 app.use( cors() );
+app.use(express.static('client'));
 
 app.get('/', (req: object, res: object) => {
-    // const locations = getLocations('./source/locations.json');
-    // const locationsJson = JSON.parse(locations)
-    return res.json( locations )
+    return (
+        res.type('.html')
+        res.sendFile(path.resolve(__dirname, 'client/index.html'))
+    )
+});
+app.get('/docx', (req: object, res: object) => {
+    return (
+        res.type('.html')
+        res.sendFile(path.resolve(__dirname, 'client/docx.html'))
+    )
 });
 app.get('/adverts', (req: object, res: object) => {
     baseController.GetAdverts()
         .then( data => {
-            console.log("Request POST --->")
-            console.log(data)
             res.status(200)
             return res.json( data )
         })
