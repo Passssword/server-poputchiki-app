@@ -14,13 +14,13 @@ app.use(express.static('client'));
 
 app.get('/', (req: object, res: object) => {
     return (
-        res.type('.html')
+        // res.type('.html')
         res.sendFile(path.resolve(__dirname, 'client/index.html'))
     )
 });
 app.get('/docx', (req: object, res: object) => {
     return (
-        res.type('.html')
+        // res.type('.html')
         res.sendFile(path.resolve(__dirname, 'client/docx.html'))
     )
 });

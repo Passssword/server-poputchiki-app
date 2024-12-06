@@ -11,15 +11,15 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('client'));
 app.get('/', function (req, res) {
-    return (res.type('.html'));
-    res.sendFile(path.resolve(__dirname, 'client/index.html'));
+    return (
+    // res.type('.html')
+    res.sendFile(path.resolve(__dirname, 'client/index.html')));
 });
-;
 app.get('/docx', function (req, res) {
-    return (res.type('.html'));
-    res.sendFile(path.resolve(__dirname, 'client/docx.html'));
+    return (
+    // res.type('.html')
+    res.sendFile(path.resolve(__dirname, 'client/docx.html')));
 });
-;
 app.get('/adverts', function (req, res) {
     databaseController_js_1.baseController.GetAdverts()
         .then(function (data) {
