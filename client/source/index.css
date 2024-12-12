@@ -27,7 +27,7 @@
 }
 .content_block {
 	width: 800px;
-	height: 600px;
+	min-height: 300px;
 	margin-top: 30px;
 	padding: 40px 30px;
 	border: 1px solid var(--color3);
@@ -46,6 +46,8 @@ h1 {font: bold 35px "Cruinn",sans-serif;}
 h2 {font: bold 30px "Cruinn",sans-serif;}
 h3 {font: bold 25px "Cruinn",sans-serif;}
 h4 {font: bold 20px "Cruinn",sans-serif;}
+
+ul {padding-left: 20px}
 
 .grey_marker {background-color: #ddd;}
 
