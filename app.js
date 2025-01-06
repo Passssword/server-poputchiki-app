@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+var express = require("express");
+var cors = require("cors");
+var bodyParser = require("body-parser");
+var path = require("path");
+var routes_1 = require("./routes/routes");
+exports.app = express();
+exports.app.use(bodyParser.json());
+exports.app.use(cors());
+exports.app.use(express.static('client'));
+(0, routes_1.addRoutes)(exports.app, path, __dirname);
