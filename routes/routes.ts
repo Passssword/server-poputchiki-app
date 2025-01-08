@@ -8,39 +8,7 @@ import {
 } from '../model/requestModel.ts'
 
 export const addRoutes = (app: Express, path: any, dirr: any) => {
-	app.get('/', (req: object, res: object) => {
-	    return (
-	        // res.type('.html')
-	        res.sendFile(path.resolve(dirr, 'client/index.html'))
 
-	    )
-	});
-	app.get('/docx', (req: object, res: object) => {
-	    return (
-	        // res.type('.html')
-	        res.sendFile(path.resolve(dirr, 'client/docx.html'))
-	    )
-	});
-	app.get('/adverts', (req: object, res: object) => {
-	    baseController.GetAdverts()
-	        .then( data => {
-	            res.status(200)
-	            return res.json( data )
-	        })
-	        .catch(err => console.log(err))
-	});
-	app.post('/adverts', (req: object, res: object) => {
-	    // const reqBody = JSON.parse(req.body)
-	    console.log("Request POST --->")
-	    console.log(req.body)
-	    baseController.create(req.body, (error) => {
-	        if(error) {return console.log(error)}
-	    })
-	    return res.json( {
-	        status: 200,
-	        comment: "data is sending"
-	    } )
-	});
 	app.get('/admin', (req: object, res: object) => {
 	    baseController.GetLocations()
 	        .then( data => {
