@@ -27,6 +27,10 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	        comment: `${req.body} was added to base`
 	    } )
 	});
+	app.post('/admin/addUser', (req: object, res: object) => {
+        console.log("Request /admin/addUser POST --->")
+	    console.log(req.body)
+    })
 	app.delete('/towns/:townId', (req: RequestWithDeleteTown<DeleteTownModel>, res: object) => {
 	    // res.status(200)
 	    console.log("Request DELETE --->")

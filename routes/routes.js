@@ -23,6 +23,10 @@ var addRoutes = function (app, path, dirr) {
             comment: "".concat(req.body, " was added to base")
         });
     });
+    app.post('/admin/addUser', function (req, res) {
+        console.log("Request /admin/addUser POST --->");
+        console.log(req.body);
+    });
     app.delete('/towns/:townId', function (req, res) {
         // res.status(200)
         console.log("Request DELETE --->");
