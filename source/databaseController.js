@@ -22,8 +22,16 @@ db.serialize( () => {
           town TEXT NOT NULL
           )
     `
+    const users = `
+        CREATE TABLE IF NOT EXISTS users(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          login TEXT NOT NULL,
+          password TEXT NOT NULL
+          )
+    `
     db.run(adverts)
     db.run(towns)
+    db.run(users)
 } )
 
 class baseController {
@@ -62,6 +70,13 @@ class baseController {
     static deleteTown (id) {
       const sql = `DELETE FROM towns WHERE id=${id}`
       db.run(sql)
+    }
+    static addUser (data) {
+      console.log(data.login)
+      console.log(data.password)
+      const dataArray = [data.login, data.password]
+      const sql = `INSERT INTO users(login, password) VALUES( ?, ? )`
+      db.run(sql, dataArray)
     }
 }
 
