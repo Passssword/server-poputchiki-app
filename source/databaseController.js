@@ -71,6 +71,15 @@ class baseController {
       const sql = `DELETE FROM towns WHERE id=${id}`
       db.run(sql)
     }
+    static GetUsers () { return new Promise( (resolve, reject)=>{
+      db.all('SELECT * FROM users', (error, result)=>{
+      if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      }) })
+  }
     static addUser (data) {
       console.log(data.login)
       console.log(data.password)

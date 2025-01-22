@@ -1,5 +1,6 @@
 import {Express} from 'express';
 import { baseController } from '../source/databaseController.js'
+import { ValidationController } from '../source/validationController.js'
 import {
     RequestWithAddTown,
     RequestWithDeleteTown,
@@ -31,14 +32,16 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
         console.log("Request /admin/addUser POST --->")
 	    console.log(req.body)
 
-		baseController.addUser(req.body, (error) => {
-	        if(error) {return console.log(error)}
-			else {
-				return res.json( {
-					status: 200,
-					comment: `${req.body} was added to base`
-				} )}
-	    })
+		ValidationController.VerifyUniqueLogin(req.body.login)
+		
+		// baseController.addUser(req.body, (error) => {
+	    //     if(error) {return console.log(error)}
+		// 	else {
+		// 		return res.json( {
+		// 			status: 200,
+		// 			comment: `${req.body} was added to base`
+		// 		} )}
+	    // })
 		
     })
 	app.delete('/towns/:townId', (req: RequestWithDeleteTown<DeleteTownModel>, res: object) => {
