@@ -32,7 +32,22 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
         console.log("Request /admin/addUser POST --->")
 	    console.log(req.body)
 
-		ValidationController.VerifyUniqueLogin(req.body.login)
+		ValidationController.VerifyUniqueLogin(req.body)
+			.then( result => {
+				console.log(result.message)
+				if (result.status == 422 ) {
+					return res.json( {
+						status: result.status,
+						comment: `${result.message}`
+					} )
+				} else {
+					return res.json( {
+						status: result.status,
+						comment: `${result.message}`
+					} )
+				}
+				
+			})
 		
 		// baseController.addUser(req.body, (error) => {
 	    //     if(error) {return console.log(error)}

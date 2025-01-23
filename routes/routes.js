@@ -27,7 +27,22 @@ var addRoutes = function (app, path, dirr) {
     app.post('/admin/addUser', function (req, res) {
         console.log("Request /admin/addUser POST --->");
         console.log(req.body);
-        validationController_js_1.ValidationController.VerifyUniqueLogin(req.body.login);
+        validationController_js_1.ValidationController.VerifyUniqueLogin(req.body)
+            .then(function (result) {
+            console.log(result.message);
+            if (result.status == 422) {
+                return res.json({
+                    status: result.status,
+                    comment: "".concat(result.message)
+                });
+            }
+            else {
+                return res.json({
+                    status: result.status,
+                    comment: "".concat(result.message)
+                });
+            }
+        });
         // baseController.addUser(req.body, (error) => {
         //     if(error) {return console.log(error)}
         // 	else {
