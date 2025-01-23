@@ -12,6 +12,14 @@ var addRoutes = function (app, path, dirr) {
         })
             .catch(function (err) { return console.log(err); });
     });
+    app.get('/admin/getUsers', function (req, res) {
+        databaseController_js_1.baseController.GetUsers()
+            .then(function (data) {
+            res.status(200);
+            return res.json(data);
+        })
+            .catch(function (err) { return console.log(err); });
+    });
     app.post('/admin', function (req, res) {
         console.log(req.body);
         databaseController_js_1.baseController.addTown(req.body, function (error) {
@@ -43,14 +51,6 @@ var addRoutes = function (app, path, dirr) {
                 });
             }
         });
-        // baseController.addUser(req.body, (error) => {
-        //     if(error) {return console.log(error)}
-        // 	else {
-        // 		return res.json( {
-        // 			status: 200,
-        // 			comment: `${req.body} was added to base`
-        // 		} )}
-        // })
     });
     app.delete('/towns/:townId', function (req, res) {
         // res.status(200)

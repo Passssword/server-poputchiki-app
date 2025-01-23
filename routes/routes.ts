@@ -18,6 +18,14 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	        })
 	        .catch(err => console.log(err))
 	});
+	app.get('/admin/getUsers', (req: object, res: object) => {
+		baseController.GetUsers()
+	        .then( data => {
+	            res.status(200)
+	            return res.json( data )
+	        })
+	        .catch(err => console.log(err))
+	})
 	app.post('/admin', (req: RequestWithAddTown<AdminAddTownModel>, res: object) => {
 	    console.log(req.body)
 	    baseController.addTown(req.body, (error) => {
@@ -48,15 +56,6 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 				}
 				
 			})
-		
-		// baseController.addUser(req.body, (error) => {
-	    //     if(error) {return console.log(error)}
-		// 	else {
-		// 		return res.json( {
-		// 			status: 200,
-		// 			comment: `${req.body} was added to base`
-		// 		} )}
-	    // })
 		
     })
 	app.delete('/towns/:townId', (req: RequestWithDeleteTown<DeleteTownModel>, res: object) => {
