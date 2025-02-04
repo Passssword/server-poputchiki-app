@@ -41,13 +41,13 @@ var addRoutes = function (app, path, dirr) {
             if (result.status == 422) {
                 return res.json({
                     status: result.status,
-                    comment: "".concat(result.message)
+                    comment: result.message
                 });
             }
             else {
                 return res.json({
                     status: result.status,
-                    comment: "".concat(result.message)
+                    comment: result.message
                 });
             }
         });
@@ -58,6 +58,21 @@ var addRoutes = function (app, path, dirr) {
         console.log(req.params);
         var townId = req.params.townId;
         databaseController_js_1.baseController.deleteTown(townId, function (error) {
+            if (error) {
+                return console.log(error);
+            }
+        });
+        return res.json({
+            status: 200,
+            comment: "was deleted to base"
+        });
+    });
+    app.delete('/users/:userId', function (req, res) {
+        // res.status(200)
+        console.log("Request DELETE --->");
+        console.log(req.params);
+        var userId = req.params.userId;
+        databaseController_js_1.baseController.deleteUser(userId, function (error) {
             if (error) {
                 return console.log(error);
             }

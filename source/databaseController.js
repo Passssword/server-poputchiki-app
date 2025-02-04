@@ -87,6 +87,10 @@ class baseController {
       const sql = `INSERT INTO users(login, password) VALUES( ?, ? )`
       db.run(sql, dataArray)
     }
+    static deleteUser (id) {
+      const sql = `DELETE FROM users WHERE id=${id}`
+      db.run(sql)
+    }
 }
 
 module.exports = db;

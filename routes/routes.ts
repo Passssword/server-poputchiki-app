@@ -46,12 +46,12 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 				if (result.status == 422 ) {
 					return res.json( {
 						status: result.status,
-						comment: `${result.message}`
+						comment: result.message
 					} )
 				} else {
 					return res.json( {
 						status: result.status,
-						comment: `${result.message}`
+						comment: result.message
 					} )
 				}
 				
@@ -65,6 +65,21 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	    const {townId} = req.params
 
 	    baseController.deleteTown(townId, (error) => {
+	        if(error) {return console.log(error)}
+	    })
+
+	    return res.json( {
+	        status: 200,
+	        comment: `was deleted to base`
+	    } )
+	});
+	app.delete('/users/:userId', (req: object, res: object) => {
+	    // res.status(200)
+	    console.log("Request DELETE --->")
+	    console.log(req.params)
+	    const {userId} = req.params
+
+	    baseController.deleteUser(userId, (error) => {
 	        if(error) {return console.log(error)}
 	    })
 
