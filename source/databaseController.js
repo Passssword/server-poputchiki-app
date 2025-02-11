@@ -85,7 +85,16 @@ class baseController {
       console.log(data.password)
       const dataArray = [data.login, data.password]
       const sql = `INSERT INTO users(login, password) VALUES( ?, ? )`
-      db.run(sql, dataArray)
+      return new Promise( (resolve, reject) => {
+        db.run(sql, dataArray, (err) => {
+          if (err) {
+            console.log(err)
+            reject(err)
+          }
+          else {resolve("Совпадений не найденно, создана новая запись")}
+        })  
+      })
+      
     }
     static deleteUser (id) {
       const sql = `DELETE FROM users WHERE id=${id}`

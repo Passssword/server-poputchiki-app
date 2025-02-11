@@ -11,13 +11,15 @@ class ValidationController {
                     message: 'В базе найдено совпадение, создание новой записи запрещенно'
                 };
             } else {
-                BaseController.addUser(requestData, (error) => {
+                return BaseController.addUser(requestData, (error) => {
                     if(error) {console.log(error)}
+                }).then( data => {
+                    return {
+                        status: 200,
+                        message: data
+                    };
                 })
-                return {
-                    status: 200,
-                    message: 'Совпадений не найденно, создается новая запись'
-                };
+                
             }
             
         })  
