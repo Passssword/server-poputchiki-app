@@ -49,14 +49,15 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 						comment: result.message
 					} )
 				} else {
-					return res.json( {
-						status: result.status,
-						comment: result.message
-					} )
+					return baseController.selectLastUser().then(lastUserId => {
+						return res.json( {
+							status: result.status,
+							comment: result.message,
+							userId: lastUserId
+						} )
+					})
 				}
-				
 			})
-		
     })
 	app.delete('/towns/:townId', (req: RequestWithDeleteTown<DeleteTownModel>, res: object) => {
 	    // res.status(200)

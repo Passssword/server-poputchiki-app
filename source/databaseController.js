@@ -100,6 +100,18 @@ class baseController {
       const sql = `DELETE FROM users WHERE id=${id}`
       db.run(sql)
     }
+    static selectLastUser () { return new Promise( (resolve, reject)=>{
+      // const sql = `SELECT * FROM users ORDER BY id DESC LIMIT 1`
+      const sql = `SELECT * FROM users WHERE ROWID IN ( SELECT max( ROWID ) FROM users );`
+      db.get(sql, (error, result)=>{
+          if (error) {
+              reject(error);
+            } else {
+              resolve(result.id);
+            } }
+        )
+      })
+    }
 }
 
 module.exports = db;

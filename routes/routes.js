@@ -45,9 +45,12 @@ var addRoutes = function (app, path, dirr) {
                 });
             }
             else {
-                return res.json({
-                    status: result.status,
-                    comment: result.message
+                return databaseController_js_1.baseController.selectLastUser().then(function (lastUserId) {
+                    return res.json({
+                        status: result.status,
+                        comment: result.message,
+                        userId: lastUserId
+                    });
                 });
             }
         });
