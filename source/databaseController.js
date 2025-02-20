@@ -81,8 +81,6 @@ class baseController {
       }) })
   }
     static addUser (data) {
-      console.log(data.login)
-      console.log(data.password)
       const dataArray = [data.login, data.password]
       const sql = `INSERT INTO users(login, password) VALUES( ?, ? )`
       return new Promise( (resolve, reject) => {

@@ -38,9 +38,10 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	});
 	app.post('/admin/addUser', (req: object, res: object) => {
         console.log("Request /admin/addUser POST --->")
-	    console.log(req.body)
+		let userObj = req.header('User-Object')
+		console.log(JSON.parse(userObj))
 
-		ValidationController.VerifyUniqueLogin(req.body)
+		ValidationController.VerifyUniqueLogin(JSON.parse(userObj))
 			.then( result => {
 				console.log(result.message)
 				if (result.status == 422 ) {

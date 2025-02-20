@@ -34,8 +34,9 @@ var addRoutes = function (app, path, dirr) {
     });
     app.post('/admin/addUser', function (req, res) {
         console.log("Request /admin/addUser POST --->");
-        console.log(req.body);
-        validationController_js_1.ValidationController.VerifyUniqueLogin(req.body)
+        var userObj = req.header('User-Object');
+        console.log(JSON.parse(userObj));
+        validationController_js_1.ValidationController.VerifyUniqueLogin(JSON.parse(userObj))
             .then(function (result) {
             console.log(result.message);
             if (result.status == 422) {
