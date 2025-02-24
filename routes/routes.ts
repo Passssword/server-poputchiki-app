@@ -39,6 +39,11 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	app.post('/admin/addUser', (req: object, res: object) => {
         console.log("Request /admin/addUser POST --->")
 		let userObj = req.header('User-Object')
+
+		// Декодирование из base64
+		userObj = Buffer.from(userObj, 'base64').toString();
+		//------------------------
+		
 		console.log(JSON.parse(userObj))
 
 		ValidationController.VerifyUniqueLogin(JSON.parse(userObj))
