@@ -8,10 +8,15 @@ var path = require("path");
 var routes_1 = require("./routes/routes");
 var serverDocx_1 = require("./routes/serverDocx");
 var advertsRouter_1 = require("./routes/advertsRouter");
+var cookie_js_1 = require("./session/cookie.js");
 exports.app = express();
+var corsOptions = {
+    exposedHeaders: ['Authorization', 'Cookie'],
+};
 exports.app.use(bodyParser.json());
-exports.app.use(cors());
+exports.app.use(cors(corsOptions));
 exports.app.use(express.static('client'));
+exports.app.use(cookie_js_1.checkCookie);
 exports.app.use("/", (0, serverDocx_1.serverDocxRouter)(path, __dirname));
 exports.app.use("/adverts", (0, advertsRouter_1.advertsRouter)());
 (0, routes_1.addRoutes)(exports.app, path, __dirname);

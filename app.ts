@@ -5,13 +5,17 @@ import * as path from 'path'
 import {addRoutes} from './routes/routes'
 import {serverDocxRouter} from './routes/serverDocx'
 import {advertsRouter} from './routes/advertsRouter'
+import {checkCookie} from './session/cookie.js'
 
 export const app = express();
-
+const corsOptions = {
+  exposedHeaders: ['Authorization', 'Cookie'],
+};
 
 app.use( bodyParser.json() )
-app.use( cors() );
+app.use( cors(corsOptions) );
 app.use(express.static('client'));
+app.use(checkCookie)
 
 app.use("/", serverDocxRouter(path, __dirname) )
 app.use("/adverts", advertsRouter() )

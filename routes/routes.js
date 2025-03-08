@@ -35,7 +35,9 @@ var addRoutes = function (app, path, dirr) {
     app.post('/admin/addUser', function (req, res) {
         console.log("Request /admin/addUser POST --->");
         var userObj = req.header('User-Object');
+        // Декодирование из base64
         userObj = Buffer.from(userObj, 'base64').toString();
+        //------------------------
         console.log(JSON.parse(userObj));
         validationController_js_1.ValidationController.VerifyUniqueLogin(JSON.parse(userObj))
             .then(function (result) {
