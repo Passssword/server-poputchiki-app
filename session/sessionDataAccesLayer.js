@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 
 const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database(__dirname+'session/sessions.db')
+const db = new sqlite3.Database('session/sessions.db')
 
 db.serialize( () => {
     const sessions = `
@@ -19,16 +19,27 @@ class sessionController {
     static GenerateSessionKey () {
         return crypto.randomBytes(32).toString("hex")
     }
-    static saveSession (key) {
-        let dataArray = ['KSIJS6shs7qd7djs', '', '']
+    static GenerateNewSession () {
+        let newKey = this.GenerateSessionKey()
+        // сессия новая, поэтому пользователь не определен
+        let user_id = null;
+        // плюс сутки к текущей дате в милисекундах
+        let expires = Date.now()+(1*24*60*60*1000)
+
+        return [newKey, user_id, expires]
+    }
+    static SaveSession (sessionObj) {
+        
         const sql = `INSERT INTO sessions(session_key, user_id, expiresDate) VALUES( ?, ?, ? )`
         return new Promise( (resolve, reject) => {
-            db.run(sql, dataArray, (err) => {
+            db.run(sql, sessionObj, (err) => {
             if (err) {
                 console.log(err)
                 reject(err)
             }
-            else {resolve("Совпадений не найденно, создана новая запись")}
+            else {
+                console.log("Совпадений не найденно, создана новая сессия")
+                resolve(sessionObj)}
             })  
         })
     }
