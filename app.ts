@@ -5,7 +5,8 @@ import * as path from 'path'
 import {addRoutes} from './routes/routes'
 import {serverDocxRouter} from './routes/serverDocx'
 import {advertsRouter} from './routes/advertsRouter'
-import {checkCookie} from './session/cookie.js'
+import {cookieMiddleware} from './session/cookieMiddleware.js'
+import {sessionMiddleware} from './session/sessionMiddleware.js'
 
 export const app = express();
 const corsOptions = {
@@ -15,7 +16,8 @@ const corsOptions = {
 app.use( bodyParser.json() )
 app.use( cors(corsOptions) );
 app.use(express.static('client'));
-app.use(checkCookie)
+app.use(cookieMiddleware)
+app.use(sessionMiddleware)
 
 app.use("/", serverDocxRouter(path, __dirname) )
 app.use("/adverts", advertsRouter() )
