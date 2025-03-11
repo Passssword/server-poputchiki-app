@@ -8,7 +8,6 @@ var path = require("path");
 var routes_1 = require("./routes/routes");
 var serverDocx_1 = require("./routes/serverDocx");
 var advertsRouter_1 = require("./routes/advertsRouter");
-var cookieMiddleware_js_1 = require("./session/cookieMiddleware.js");
 var sessionMiddleware_js_1 = require("./session/sessionMiddleware.js");
 exports.app = express();
 var corsOptions = {
@@ -17,7 +16,7 @@ var corsOptions = {
 exports.app.use(bodyParser.json());
 exports.app.use(cors(corsOptions));
 exports.app.use(express.static('client'));
-exports.app.use(cookieMiddleware_js_1.cookieMiddleware);
+// app.use(cookieMiddleware)
 exports.app.use(sessionMiddleware_js_1.sessionMiddleware);
 exports.app.use("/", (0, serverDocx_1.serverDocxRouter)(path, __dirname));
 exports.app.use("/adverts", (0, advertsRouter_1.advertsRouter)());

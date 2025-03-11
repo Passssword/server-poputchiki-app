@@ -24,9 +24,12 @@ class sessionController {
         // сессия новая, поэтому пользователь не определен
         let user_id = null;
         // плюс сутки к текущей дате в милисекундах
-        let expires = Date.now()+(1*24*60*60*1000)
+        let date = Date.now()+(1*24*60*60*1000)
+        let expires = new Date(date)
+        console.log(`Miliseconds: ${date}`)
+        console.log(`Date format: ${typeof expires.toString()}`)
 
-        return [newKey, user_id, expires]
+        return [newKey, user_id, date]
     }
     static SaveSession (sessionObj) {
         

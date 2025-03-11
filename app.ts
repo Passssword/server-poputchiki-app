@@ -16,7 +16,7 @@ const corsOptions = {
 app.use( bodyParser.json() )
 app.use( cors(corsOptions) );
 app.use(express.static('client'));
-app.use(cookieMiddleware)
+// app.use(cookieMiddleware)
 app.use(sessionMiddleware)
 
 app.use("/", serverDocxRouter(path, __dirname) )

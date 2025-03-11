@@ -1,4 +1,6 @@
 
+// middleware не используется, нет смысла в нем на данный момент.
+
 function cookieMiddleware (req, res, next) {
 	if (req.header('session')) {
 		
