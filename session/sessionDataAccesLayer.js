@@ -19,15 +19,23 @@ class sessionController {
     static GenerateSessionKey () {
         return crypto.randomBytes(32).toString("hex")
     }
+    static GetKey (key) { return new Promise( (resolve, reject)=>{
+        const sql = `SELECT * FROM sessions WHERE session_key=?`
+        db.get(sql, [key], (error, result)=>{
+            if (error) {
+                reject(error);
+              } else {
+                resolve(result);
+              } }
+          )
+        })
+    }
     static GenerateNewSession () {
         let newKey = this.GenerateSessionKey()
         // сессия новая, поэтому пользователь не определен
         let user_id = null;
         // плюс сутки к текущей дате в милисекундах
         let date = Date.now()+(1*24*60*60*1000)
-        let expires = new Date(date)
-        console.log(`Miliseconds: ${date}`)
-        console.log(`Date format: ${typeof expires.toString()}`)
 
         return [newKey, user_id, date]
     }
