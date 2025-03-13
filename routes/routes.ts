@@ -1,6 +1,7 @@
 import {Express} from 'express';
 import { baseController } from '../source/databaseController.js'
 import { ValidationController } from '../source/validationController.js'
+import { checkAuthData } from '../source/authorizationController.js'
 import {
     RequestWithAddTown,
     RequestWithDeleteTown,
@@ -19,7 +20,7 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	        .catch(err => console.log(err))
 	});
 	app.get('/admin/getUsers', (req: object, res: object) => {
-		baseController.GetUsers()
+		baseController.GetAllUsers()
 	        .then( data => {
 	            res.status(200)
 	            return res.json( data )
@@ -95,4 +96,14 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	        comment: `was deleted to base`
 	    } )
 	});
+	app.post("/api/1.0/auth", (req, res) => {
+		console.log("/api/1.0/auth --> Authorization Request")
+		
+		let userObj = req.header('User-Object')
+		// Декодирование из base64
+		userObj = Buffer.from(userObj, 'base64').toString();
+		userObj = JSON.parse(userObj)
+
+		checkAuthData(userObj, req.session)
+	})
 }

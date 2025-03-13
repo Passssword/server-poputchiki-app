@@ -71,7 +71,7 @@ class baseController {
       const sql = `DELETE FROM towns WHERE id=${id}`
       db.run(sql)
     }
-    static GetUsers () { return new Promise( (resolve, reject)=>{
+    static GetAllUsers () { return new Promise( (resolve, reject)=>{
       db.all('SELECT * FROM users', (error, result)=>{
       if (error) {
           reject(error);
@@ -79,7 +79,18 @@ class baseController {
           resolve(result);
         }
       }) })
-  }
+    }
+    static SelectUser (login, password) {return new Promise( (resolve, reject)=>{
+      const sql = `SELECT * FROM users WHERE login=? AND password=?`
+      db.get(sql, [login, password], (error, result)=>{
+          if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            } }
+        )
+      })
+    }
     static addUser (data) {
       const dataArray = [data.login, data.password]
       const sql = `INSERT INTO users(login, password) VALUES( ?, ? )`

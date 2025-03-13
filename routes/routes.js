@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addRoutes = void 0;
 var databaseController_js_1 = require("../source/databaseController.js");
 var validationController_js_1 = require("../source/validationController.js");
+var authorizationController_js_1 = require("../source/authorizationController.js");
 var addRoutes = function (app, path, dirr) {
     app.get('/admin', function (req, res) {
         databaseController_js_1.baseController.GetLocations()
@@ -13,7 +14,7 @@ var addRoutes = function (app, path, dirr) {
             .catch(function (err) { return console.log(err); });
     });
     app.get('/admin/getUsers', function (req, res) {
-        databaseController_js_1.baseController.GetUsers()
+        databaseController_js_1.baseController.GetAllUsers()
             .then(function (data) {
             res.status(200);
             return res.json(data);
@@ -88,6 +89,14 @@ var addRoutes = function (app, path, dirr) {
             status: 200,
             comment: "was deleted to base"
         });
+    });
+    app.post("/api/1.0/auth", function (req, res) {
+        console.log("/api/1.0/auth --> Authorization Request");
+        var userObj = req.header('User-Object');
+        // Декодирование из base64
+        userObj = Buffer.from(userObj, 'base64').toString();
+        userObj = JSON.parse(userObj);
+        (0, authorizationController_js_1.checkAuthData)(userObj, req.session);
     });
 };
 exports.addRoutes = addRoutes;
