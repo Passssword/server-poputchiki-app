@@ -90,13 +90,26 @@ var addRoutes = function (app, path, dirr) {
             comment: "was deleted to base"
         });
     });
-    app.post("/api/1.0/auth", function (req, res) {
+    app.get("/api/1.0/auth", function (req, res) {
         console.log("/api/1.0/auth --> Authorization Request");
-        var userObj = req.header('User-Object');
+        var userObjString = req.header('User-Object');
         // Декодирование из base64
-        userObj = Buffer.from(userObj, 'base64').toString();
-        userObj = JSON.parse(userObj);
-        (0, authorizationController_js_1.checkAuthData)(userObj, req.session);
+        userObjString = Buffer.from(userObjString, 'base64').toString();
+        var check = (0, authorizationController_js_1.checkAuthData)(JSON.parse(userObjString), req.session);
+        if (check) {
+            res.status(200);
+            return res.json({
+                status: 200,
+                comment: "\u043D\u0430\u0439\u0434\u0435\u043D \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C"
+            });
+        }
+        else {
+            res.status(401);
+            return res.json({
+                status: 401,
+                comment: "\u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u0439"
+            });
+        }
     });
 };
 exports.addRoutes = addRoutes;

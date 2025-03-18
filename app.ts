@@ -9,8 +9,11 @@ import {cookieMiddleware} from './session/cookieMiddleware.js'
 import {sessionMiddleware} from './session/sessionMiddleware.js'
 
 export const app = express();
-const corsOptions = {
+
+ const corsOptions = {
+  origin: 'http://localhost:3000',
   exposedHeaders: ['Authorization', 'Cookie'],
+  credentials: true
 };
 
 app.use( bodyParser.json() )

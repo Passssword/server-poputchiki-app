@@ -96,14 +96,27 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	        comment: `was deleted to base`
 	    } )
 	});
-	app.post("/api/1.0/auth", (req, res) => {
+	app.get("/api/1.0/auth", (req: object, res: object) => {
 		console.log("/api/1.0/auth --> Authorization Request")
 		
-		let userObj = req.header('User-Object')
+		let userObjString = req.header('User-Object')
 		// Декодирование из base64
-		userObj = Buffer.from(userObj, 'base64').toString();
-		userObj = JSON.parse(userObj)
+		userObjString = Buffer.from(userObjString, 'base64').toString();
 
-		checkAuthData(userObj, req.session)
+		let check = checkAuthData( JSON.parse(userObjString), req.session )
+		if (check) {
+			res.status(200)
+			return res.json( {
+				status: 200,
+				comment: `найден пользователь`
+			} )
+		} else {
+			res.status(401)
+			return res.json( {
+				status: 401,
+				comment: `не найдено соответствий`
+			} )
+		 }
+	
 	})
 }

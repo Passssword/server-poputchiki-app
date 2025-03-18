@@ -11,7 +11,9 @@ var advertsRouter_1 = require("./routes/advertsRouter");
 var sessionMiddleware_js_1 = require("./session/sessionMiddleware.js");
 exports.app = express();
 var corsOptions = {
+    origin: 'http://localhost:3000',
     exposedHeaders: ['Authorization', 'Cookie'],
+    credentials: true
 };
 exports.app.use(bodyParser.json());
 exports.app.use(cors(corsOptions));
