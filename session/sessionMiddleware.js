@@ -43,8 +43,8 @@ const sessionMiddleware = async (req, res, next) => {
             } else {
                 // Незарегистрированный пользователь
                 console.log("Незарегистрированный пользователь -->")
-
-                req.session = data;
+                console.log(result)
+                req.session = result;
                 next()
             }
         } 

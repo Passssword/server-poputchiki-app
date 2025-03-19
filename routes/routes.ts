@@ -96,25 +96,32 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	        comment: `was deleted to base`
 	    } )
 	});
-	app.get("/api/1.0/auth", (req: object, res: object) => {
+	app.get("/api/1.0/auth", async (req: object, res: object) => {
 		console.log("/api/1.0/auth --> Authorization Request")
 		
 		let userObjString = req.header('User-Object')
 		// Декодирование из base64
 		userObjString = Buffer.from(userObjString, 'base64').toString();
 
-		let check = checkAuthData( JSON.parse(userObjString), req.session )
-		if (check) {
+		let checkStatus = await checkAuthData( JSON.parse(userObjString), req.session )
+		if (checkStatus.status) {
+			// По учетным данным найденно соответствие
+			// Далее нужно привязать UserID к сессии
 			res.status(200)
+			res.set( {
+				'Cookie': '_session_key='+req.session.session_key,
+				'expires': req.session.expiresDate,
+			} )
 			return res.json( {
 				status: 200,
-				comment: `найден пользователь`
+				comment: `Authorization success`,
+				UserID: checkStatus.UserID
 			} )
 		} else {
 			res.status(401)
 			return res.json( {
 				status: 401,
-				comment: `не найдено соответствий`
+				comment: `Authorization error`
 			} )
 		 }
 	

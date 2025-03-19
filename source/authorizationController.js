@@ -11,8 +11,11 @@ const checkAuthData = async (userObj, sessionObj) => {
     if (result) {
         console.log("Result: -->")
         console.log(result)
-        return true
-    } else { return false }
+        
+        return {"status": true, "userID": result.id}
+    } else {
+        console.log("Совпадений в базе не найденно")
+        return {"code": false, "UserID": null} }
 }
 
 module.exports.checkAuthData = checkAuthData;
