@@ -121,6 +121,13 @@ class baseController {
         )
       })
     }
+    static updateLocation (LocationID, locationNAME) {return new Promise( (resolve, reject)=>{
+      const sql = `UPDATE towns SET tow = ? WHERE id = ?;`
+      db.run(sql, [locationNAME, LocationID], (error) => {
+        if (error) {reject(error);} else { return resolve('OK');}
+      })
+    } )
+    }
 }
 
 module.exports = db;

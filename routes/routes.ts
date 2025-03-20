@@ -125,5 +125,10 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 			} )
 		 }
 	
-	})
+	});
+	// app.put('/locations/:locationID',(req: object, res: object) => {
+	// 	const {locationID} = req.params;
+	// 	console.log(req.body)
+	// 	baseController.updateLocation()
+	// })
 }
