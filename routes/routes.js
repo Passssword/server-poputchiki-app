@@ -163,5 +163,19 @@ var addRoutes = function (app, path, dirr) {
             }
         });
     }); });
+    app.put('/locations/:locationID', function (req, res) {
+        var locationID = req.params.locationID;
+        console.log(req.body);
+        // baseController.updateLocation()
+        res.status(200);
+        res.set({
+            'Cookie': '_session_key=' + req.session.session_key,
+            'expires': req.session.expiresDate,
+        });
+        return res.json({
+            status: 200,
+            comment: "Location update in progress"
+        });
+    });
 };
 exports.addRoutes = addRoutes;

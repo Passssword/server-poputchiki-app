@@ -126,9 +126,18 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 		 }
 	
 	});
-	// app.put('/locations/:locationID',(req: object, res: object) => {
-	// 	const {locationID} = req.params;
-	// 	console.log(req.body)
-	// 	baseController.updateLocation()
-	// })
+	app.put('/locations/:locationID',(req: object, res: object) => {
+		const {locationID} = req.params;
+		console.log(req.body)
+		// baseController.updateLocation()
+		res.status(200)
+			res.set( {
+				'Cookie': '_session_key='+req.session.session_key,
+				'expires': req.session.expiresDate,
+			} )
+		return res.json( {
+	        status: 200,
+	        comment: `Location update in progress`
+	    } )
+	})
 }
