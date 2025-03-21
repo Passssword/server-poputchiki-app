@@ -127,17 +127,31 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	
 	});
 	app.put('/locations/:locationID',(req: object, res: object) => {
-		const {locationID} = req.params;
+		console.log(`/locations/${req.params.locationID} --> Location UPDATE Request`)
 		console.log(req.body)
-		// baseController.updateLocation()
-		res.status(200)
-			res.set( {
-				'Cookie': '_session_key='+req.session.session_key,
-				'expires': req.session.expiresDate,
-			} )
-		return res.json( {
-	        status: 200,
-	        comment: `Location update in progress`
-	    } )
+		baseController.updateLocation(req.body.id, req.body.locationName).then( result => {
+			console.log(result)
+			if (result == 'OK') {
+				res.status(200)
+				res.set( {
+					'Cookie': '_session_key='+req.session.session_key,
+					'expires': req.session.expiresDate,
+				} )
+				return res.json( {
+					status: 200,
+					comment: `Location update has been success`
+				} )
+			} else {
+				res.set( {
+					'Cookie': '_session_key='+req.session.session_key,
+					'expires': req.session.expiresDate,
+				} )
+				return res.json( {
+					status: 400,
+					comment: `Location update is bad request`
+				} )
+			}	
+		} )
+		
 	})
 }
