@@ -45,6 +45,10 @@ var addRoutes = function (app, path, dirr) {
         databaseController_js_1.baseController.GetLocations()
             .then(function (data) {
             res.status(200);
+            res.set({
+                'Cookie': '_session_key=' + req.session.session_key,
+                'expires': req.session.expiresDate,
+            });
             return res.json(data);
         })
             .catch(function (err) { return console.log(err); });

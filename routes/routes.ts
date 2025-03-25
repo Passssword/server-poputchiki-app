@@ -15,6 +15,10 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	    baseController.GetLocations()
 	        .then( data => {
 	            res.status(200)
+				res.set( {
+					'Cookie': '_session_key='+req.session.session_key,
+					'expires': req.session.expiresDate,
+				} )
 	            return res.json( data )
 	        })
 	        .catch(err => console.log(err))
