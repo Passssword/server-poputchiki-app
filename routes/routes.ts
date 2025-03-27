@@ -130,6 +130,34 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 		 }
 	
 	});
+	app.get("/api/1.0/auth/getUserData", async (req: object, res: object) => {
+		console.log("/api/1.0/auth/getUserData -->")
+		console.log(req.session)
+
+		if (req.session.user_id != null) {
+			// Если пользователь авторизован
+			let result = await baseController.GetUserData(req.session.user_id);
+			if (result) {
+				res.status(200)
+				return res.json( {
+					status: 200,
+					comment: `ОК`,
+					UserData: {UserID: result.id, Login: result.login }
+				} )
+			} else {
+				res.status(200)
+				return res.json( {
+					status: 200,
+					comment: `Пользователь не найден`} )
+				}
+		} else {
+			// Если пользователь НЕ авторизован
+			return res.json( {
+				// status: 401,
+				comment: `Пользователь не авторизован`
+			} )
+		}
+	});
 	app.put('/locations/:locationID',(req: object, res: object) => {
 		console.log(`/locations/${req.params.locationID} --> Location UPDATE Request`)
 		console.log(req.body)

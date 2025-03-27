@@ -91,6 +91,17 @@ class baseController {
         )
       })
     }
+    static GetUserData (UserID) {return new Promise( (resolve, reject)=>{
+      const sql = `SELECT * FROM users WHERE id=?`
+      db.get(sql, [UserID], (error, result)=>{
+          if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            } }
+        )
+      })
+    }
     static addUser (data) {
       const dataArray = [data.login, data.password]
       const sql = `INSERT INTO users(login, password) VALUES( ?, ? )`

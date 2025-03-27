@@ -167,6 +167,43 @@ var addRoutes = function (app, path, dirr) {
             }
         });
     }); });
+    app.get("/api/1.0/auth/getUserData", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("/api/1.0/auth/getUserData -->");
+                    console.log(req.session);
+                    if (!(req.session.user_id != null)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, databaseController_js_1.baseController.GetUserData(req.session.user_id)];
+                case 1:
+                    result = _a.sent();
+                    if (result) {
+                        res.status(200);
+                        return [2 /*return*/, res.json({
+                                status: 200,
+                                comment: "\u041E\u041A",
+                                UserData: { UserID: result.id, Login: result.login }
+                            })];
+                    }
+                    else {
+                        res.status(200);
+                        return [2 /*return*/, res.json({
+                                status: 200,
+                                comment: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D"
+                            })];
+                    }
+                    return [3 /*break*/, 3];
+                case 2: 
+                // Если пользователь НЕ авторизован
+                return [2 /*return*/, res.json({
+                        // status: 401,
+                        comment: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u043D\u0435 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u043E\u0432\u0430\u043D"
+                    })];
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); });
     app.put('/locations/:locationID', function (req, res) {
         console.log("/locations/".concat(req.params.locationID, " --> Location UPDATE Request"));
         console.log(req.body);

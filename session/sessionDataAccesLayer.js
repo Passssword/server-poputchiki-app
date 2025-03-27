@@ -54,6 +54,18 @@ class sessionController {
             })  
         })
     }
+    static updateSession (sessionKey, userID) {
+        return new Promise( (resolve, reject)=>{
+            const sql = `UPDATE sessions SET user_id = ? WHERE session_key = ?;`
+            db.run(sql, [userID, sessionKey], (error) => {
+                if (error) { reject(error) } else {
+                    console.log("updateSession ------>")
+                    console.log("sessionKey: "+sessionKey)
+                    console.log("userID: "+userID)
+                    return resolve("OK")
+                }
+              }) })
+    }
 }
 
 module.exports = db;
