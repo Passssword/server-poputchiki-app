@@ -35,7 +35,7 @@ db.serialize( () => {
 } )
 
 class baseController {
-    static GetAdverts () { return new Promise( (resolve, reject)=>{
+    static GetAllAdverts () { return new Promise( (resolve, reject)=>{
             db.all('SELECT * FROM adverts', (error, result)=>{
             if (error) {
                 reject(error);
@@ -43,6 +43,17 @@ class baseController {
                 resolve(result);
               }
             }) })
+    }
+    static GetAdvert (advertId) { return new Promise( (resolve, reject)=>{
+      const sql = 'SELECT * FROM adverts WHERE id=?';
+      db.get(sql, [advertId], (error, result)=>{
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      } )
+    })
     }
     static GetLocations () { return new Promise( (resolve, reject)=>{
         db.all('SELECT * FROM towns', (error, result)=>{

@@ -6,13 +6,24 @@ export const advertsRouter = () => {
 	const router = express.Router()
 
 	router.get('/', (req: object, res: object) => {
-	    baseController.GetAdverts()
+	    baseController.GetAllAdverts()
 	        .then( data => {
 	            res.status(200)
 	            return res.json( data )
 	        })
 	        .catch(err => console.log(err))
 	});
+	router.get('/:advertID', (req: object, res: object) => {
+		const {advertID} = req.params;
+		console.log("advertID ---> "+advertID)
+
+		baseController.GetAdvert(advertID).then( data => {
+			res.status(200)
+			return res.json( { status: 200, data: data } )
+		} ).catch(err => console.log(err))
+		
+	});
+
 	router.post('/', (req: object, res: object) => {
 	    // const reqBody = JSON.parse(req.body)
 	    console.log("Request POST --->")
