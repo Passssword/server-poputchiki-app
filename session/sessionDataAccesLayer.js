@@ -19,6 +19,16 @@ class sessionController {
     static GenerateSessionKey () {
         return crypto.randomBytes(32).toString("hex")
     }
+    static GetSessions () { return new Promise( (resolve, reject)=>{
+        db.all('SELECT * FROM sessions', (error, result)=>{
+            if (error) {
+                reject(error);
+              } else {
+                resolve(result);
+              }
+            })
+        } )
+    }
     static GetKey (key) { return new Promise( (resolve, reject)=>{
         const sql = `SELECT * FROM sessions WHERE session_key=?`
         db.get(sql, [key], (error, result)=>{
