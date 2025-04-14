@@ -185,5 +185,14 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 			}	
 		} )
 		
+	});
+	
+	app.get("/api/1.0/auth/getAllSessionsData", async (req: object, res: object) => {
+		console.log("/api/1.0/auth/getAllSessionsData -->")
+		res.status(200)
+		return res.json( {
+			status: 200,
+			comment: `ОК`
+		} )
 	})
 }

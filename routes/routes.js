@@ -232,5 +232,15 @@ var addRoutes = function (app, path, dirr) {
             }
         });
     });
+    app.get("/api/1.0/auth/getAllSessionsData", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            console.log("/api/1.0/auth/getAllSessionsData -->");
+            res.status(200);
+            return [2 /*return*/, res.json({
+                    status: 200,
+                    comment: "\u041E\u041A"
+                })];
+        });
+    }); });
 };
 exports.addRoutes = addRoutes;
