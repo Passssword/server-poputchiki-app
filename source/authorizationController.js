@@ -23,5 +23,9 @@ const checkAuthData = async (userObj, sessionObj) => {
         console.log("Совпадений в базе не найденно")
         return {"code": false, "UserID": null} }
 }
-
+const getAllSessions = async () => {
+    let result = await sessionController.GetSessions()
+    return result;
+}
 module.exports.checkAuthData = checkAuthData;
+module.exports.getAllSessions = getAllSessions;

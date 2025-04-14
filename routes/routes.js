@@ -233,13 +233,25 @@ var addRoutes = function (app, path, dirr) {
         });
     });
     app.get("/api/1.0/auth/getAllSessionsData", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
         return __generator(this, function (_a) {
-            console.log("/api/1.0/auth/getAllSessionsData -->");
-            res.status(200);
-            return [2 /*return*/, res.json({
-                    status: 200,
-                    comment: "\u041E\u041A"
-                })];
+            switch (_a.label) {
+                case 0:
+                    console.log("/api/1.0/auth/getAllSessionsData -->");
+                    return [4 /*yield*/, (0, authorizationController_js_1.getAllSessions)()];
+                case 1:
+                    result = _a.sent();
+                    res.status(200);
+                    res.set({
+                        'Cookie': '_session_key=' + req.session.session_key,
+                        'expires': req.session.expiresDate,
+                    });
+                    return [2 /*return*/, res.json({
+                            status: 200,
+                            comment: "Route:  /api/1.0/auth/getAllSessionsData",
+                            SessionsData: result
+                        })];
+            }
         });
     }); });
 };

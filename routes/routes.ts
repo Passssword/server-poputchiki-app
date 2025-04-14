@@ -1,7 +1,7 @@
 import {Express} from 'express';
 import { baseController } from '../source/databaseController.js'
 import { ValidationController } from '../source/validationController.js'
-import { checkAuthData } from '../source/authorizationController.js'
+import { checkAuthData, getAllSessions } from '../source/authorizationController.js'
 import {
     RequestWithAddTown,
     RequestWithDeleteTown,
@@ -189,10 +189,18 @@ export const addRoutes = (app: Express, path: any, dirr: any) => {
 	
 	app.get("/api/1.0/auth/getAllSessionsData", async (req: object, res: object) => {
 		console.log("/api/1.0/auth/getAllSessionsData -->")
+
+		let result = await getAllSessions()
+
 		res.status(200)
+		res.set( {
+			'Cookie': '_session_key='+req.session.session_key,
+			'expires': req.session.expiresDate,
+		} )
 		return res.json( {
 			status: 200,
-			comment: `ОК`
+			comment: `Route:  /api/1.0/auth/getAllSessionsData`,
+			SessionsData: result
 		} )
 	})
 }
